@@ -22,6 +22,10 @@ whenever email address is coming from disposable service.
 
 #### Docker Hub
 
+```shell
+docker pull 0x19/disposable
+```
+
 #### Manual
 
 ```shell
