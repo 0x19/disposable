@@ -30,5 +30,11 @@ push: build-docker
 	docker tag $(NAME) $(IMAGE)
 	docker push $(IMAGE)
 
+install:
+	go install
+
 start: submodules
+	disposable
+
+run: submodules
 	go build && ./disposable
