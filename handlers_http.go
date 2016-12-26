@@ -25,6 +25,7 @@ func HandleVerifyEmail(s *Service, w http.ResponseWriter, req *http.Request) {
 	if err := DecodeRequestBody(&vreq, req.Body); err != nil {
 		j, derr := json.MarshalIndent(err, "", " ")
 		if derr != nil {
+			log.Errorf("[http_handle_verify_email] Unable to decode json into disposable request due to (err: %s)", derr)
 			http.Error(w, derr.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -36,7 +37,7 @@ func HandleVerifyEmail(s *Service, w http.ResponseWriter, req *http.Request) {
 
 	log.Infof("[http_handle_verify_email] Got new email verification request (req_vars: %+v) - (body: %+v)", vars, vreq)
 
-	timeout, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	timeout, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
 
 	accresp, err := s.Verify(timeout, &vreq)
@@ -59,4 +60,5 @@ func HandleVerifyEmail(s *Service, w http.ResponseWriter, req *http.Request) {
 	}
 
 	w.Write(j)
+	return
 }
