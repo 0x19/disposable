@@ -1,12 +1,25 @@
 language: go
 
-# Handle git submodules yourself
+#
+# I use SSH URLs in my submodules for convenience. However, Travis CI is unable to
+# clone from those URLs even though the repositories are public. To fix this, I'm
+# simply manipulating the .gitmodules file with sed so it points to the public
+# URLs before initializing the submodules.
+#
+# Hope it saves you some frustration!
+# https://gist.github.com/iedemam/9830045
+
+# disable the default submodule logic
 git:
-    submodules: false
-# Use sed to replace the SSH URL with the public URL, then initialize submodules
+  submodules: false
+
+# use sed to replace the SSH URL with the public URL, then init and update submodules
 before_install:
-  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
-  - git submodule update --init --recursive
+ - sed -i 's/git@github.com:/git:\/\/github.com\//' .gitmodules
+ - git submodule init
+ - git submodule update
+ - git submodule foreach git checkout master
+ - git submodule foreach git pull origin master
 
 env:
   - DISPOSABLE_EMAILS_SOURCE=$HOME/gopath/src/github.com/0x19/disposable/services/burner/emails.txt
