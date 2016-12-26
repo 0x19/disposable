@@ -14,14 +14,13 @@ import (
 
 	disposable "github.com/0x19/disposable/protos"
 	. "github.com/smartystreets/goconvey/convey"
-	"github.com/zang-cloud/micro-accounts-balance/helpers"
 )
 
 func TestHandleVerifyEmail(t *testing.T) {
 	var service *Service
 	var err error
 
-	grpcPort := helpers.Random(6200, 6400)
+	grpcPort := Random(6200, 6400)
 	httpPort := grpcPort + 1
 
 	go func(service *Service, err error) {
@@ -80,7 +79,7 @@ func TestHandleVerifyEmail(t *testing.T) {
 		So(resp.Header["Content-Type"], ShouldResemble, []string{"application/json"})
 
 		var dr disposable.DisposableResponse
-		jrerr := helpers.DecodeJSONBody(&dr, resp.Body)
+		jrerr := DecodeJSONBody(&dr, resp.Body)
 		So(jrerr, ShouldBeNil)
 
 		So(dr.Status, ShouldBeFalse)
@@ -112,7 +111,7 @@ func TestHandleVerifyEmail(t *testing.T) {
 		So(resp.Header["Content-Type"], ShouldResemble, []string{"application/json"})
 
 		var dr disposable.DisposableResponse
-		jrerr := helpers.DecodeJSONBody(&dr, resp.Body)
+		jrerr := DecodeJSONBody(&dr, resp.Body)
 		So(jrerr, ShouldBeNil)
 
 		So(dr.Status, ShouldBeFalse)
@@ -144,7 +143,7 @@ func TestHandleVerifyEmail(t *testing.T) {
 		So(resp.Header["Content-Type"], ShouldResemble, []string{"application/json"})
 
 		var dr disposable.DisposableResponse
-		jrerr := helpers.DecodeJSONBody(&dr, resp.Body)
+		jrerr := DecodeJSONBody(&dr, resp.Body)
 		So(jrerr, ShouldBeNil)
 
 		So(dr.Status, ShouldBeFalse)
@@ -176,7 +175,7 @@ func TestHandleVerifyEmail(t *testing.T) {
 		So(resp.Header["Content-Type"], ShouldResemble, []string{"application/json"})
 
 		var dr disposable.DisposableResponse
-		jrerr := helpers.DecodeJSONBody(&dr, resp.Body)
+		jrerr := DecodeJSONBody(&dr, resp.Body)
 		So(jrerr, ShouldBeNil)
 
 		So(dr.Status, ShouldBeFalse)
@@ -208,7 +207,7 @@ func TestHandleVerifyEmail(t *testing.T) {
 		So(resp.Header["Content-Type"], ShouldResemble, []string{"application/json"})
 
 		var dr disposable.DisposableResponse
-		jrerr := helpers.DecodeJSONBody(&dr, resp.Body)
+		jrerr := DecodeJSONBody(&dr, resp.Body)
 		So(jrerr, ShouldBeNil)
 
 		So(dr.Status, ShouldBeTrue)

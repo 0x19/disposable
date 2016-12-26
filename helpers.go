@@ -9,7 +9,10 @@ import (
 	"encoding/json"
 	"io"
 	"io/ioutil"
+	"math/rand"
 	"net/http"
+	"strconv"
+	"time"
 
 	disposable "github.com/0x19/disposable/protos"
 	uuid "github.com/satori/go.uuid"
@@ -68,4 +71,20 @@ func DecodeRequestBody(i interface{}, body io.Reader) *disposable.DisposableResp
 	}
 
 	return nil
+}
+
+// ToBool - Will return string value back as bool OR respond with defaults
+func ToBool(value string, def bool) bool {
+	b, err := strconv.ParseBool(value)
+	if err != nil {
+		return def
+	}
+
+	return b
+}
+
+// Random -
+func Random(min, max int) int {
+	rand.Seed(time.Now().Unix())
+	return rand.Intn(max-min) + min
 }

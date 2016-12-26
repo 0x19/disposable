@@ -13,7 +13,6 @@ import (
 	disposable "github.com/0x19/disposable/protos"
 	uuid "github.com/satori/go.uuid"
 	. "github.com/smartystreets/goconvey/convey"
-	"github.com/zang-cloud/micro-accounts-balance/helpers"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -23,7 +22,7 @@ func TestVerifyEmail(t *testing.T) {
 	var service *Service
 	var err error
 
-	grpcPort := helpers.Random(6200, 6400)
+	grpcPort := Random(6200, 6400)
 	httpPort := grpcPort + 1
 
 	go func(service *Service, err error) {
