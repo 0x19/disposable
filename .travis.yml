@@ -42,4 +42,4 @@ install:
   - go get -v "github.com/smartystreets/goconvey/convey"
 
 script:
-  - go test -run=TestTravis
+  - go test
