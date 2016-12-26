@@ -30,9 +30,8 @@ func NewTestServer() (*Service, error) {
 	return service, nil
 }
 
-// TestTravis - I am going to fix travis. Once that's resolved, I am going to remove this.
-// Tests work just fine. There's problem with travis and submodules that I'm looking into.
-// This is here to make go green :/
+// TestTravis - I am going to fix travis. Basically it breaks on GRPC TLS certificates that are not included in
+// this repo. Need to generate test TLS
 func TestTravis(t *testing.T) {
 	Convey("Keeps failing on submodule and due to that, just don't have time to deal with it now.", t, func() {
 		So(nil, ShouldBeNil)

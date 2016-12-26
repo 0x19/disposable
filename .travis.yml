@@ -23,7 +23,8 @@ before_install:
 
 env:
   - DISPOSABLE_EMAILS_SOURCE=$HOME/gopath/src/github.com/0x19/disposable/services/burner/emails.txt
-
+  - GRPC_KEY_FILE=$HOME/gopath/src/github.com/0x19/disposable/travis/certs/devserver.key
+  - GRPC_CA_FILE=$HOME/gopath/src/github.com/0x19/disposable/travis/certs/devserver.crt
 go:
   - 1.5
   - 1.6

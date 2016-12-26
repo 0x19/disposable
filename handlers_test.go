@@ -5,7 +5,9 @@
 package main
 
 import (
+	"crypto/x509"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"testing"
 	"time"
@@ -24,6 +26,12 @@ func TestVerifyEmail(t *testing.T) {
 
 	grpcPort := Random(6200, 6400)
 	httpPort := grpcPort + 1
+	caCert := OptionString("GRPC_CA_FILE", "")
+	caHost := OptionString("GRPC_HOST", "localhost")
+
+	caCertt, _ := ioutil.ReadFile(caCert)
+	caCertPool := x509.NewCertPool()
+	caCertPool.AppendCertsFromPEM(caCertt)
 
 	go func(service *Service, err error) {
 		os.Setenv("GRPC_ADDR", fmt.Sprintf(":%d", grpcPort))
@@ -40,7 +48,7 @@ func TestVerifyEmail(t *testing.T) {
 
 	Convey("Email address is required", t, func() {
 		opts := []grpc.DialOption{}
-		creds := credentials.NewClientTLSFromCert(nil, "zangsandbox.com")
+		creds := credentials.NewClientTLSFromCert(caCertPool, caHost)
 		opts = append(opts, grpc.WithTransportCredentials(creds))
 		opts = append(opts, grpc.WithBlock())
 		conn, err := grpc.Dial(fmt.Sprintf(":%d", grpcPort), opts...)
@@ -67,7 +75,7 @@ func TestVerifyEmail(t *testing.T) {
 
 	Convey("Valid email address is required", t, func() {
 		opts := []grpc.DialOption{}
-		creds := credentials.NewClientTLSFromCert(nil, "zangsandbox.com")
+		creds := credentials.NewClientTLSFromCert(caCertPool, caHost)
 		opts = append(opts, grpc.WithTransportCredentials(creds))
 		opts = append(opts, grpc.WithBlock())
 		conn, err := grpc.Dial(fmt.Sprintf(":%d", grpcPort), opts...)
@@ -96,7 +104,7 @@ func TestVerifyEmail(t *testing.T) {
 
 	Convey("Valid email address but under illegal domain", t, func() {
 		opts := []grpc.DialOption{}
-		creds := credentials.NewClientTLSFromCert(nil, "zangsandbox.com")
+		creds := credentials.NewClientTLSFromCert(caCertPool, caHost)
 		opts = append(opts, grpc.WithTransportCredentials(creds))
 		opts = append(opts, grpc.WithBlock())
 		conn, err := grpc.Dial(fmt.Sprintf(":%d", grpcPort), opts...)
@@ -125,7 +133,7 @@ func TestVerifyEmail(t *testing.T) {
 
 	Convey("Valid email address and valid domain", t, func() {
 		opts := []grpc.DialOption{}
-		creds := credentials.NewClientTLSFromCert(nil, "zangsandbox.com")
+		creds := credentials.NewClientTLSFromCert(caCertPool, caHost)
 		opts = append(opts, grpc.WithTransportCredentials(creds))
 		opts = append(opts, grpc.WithBlock())
 		conn, err := grpc.Dial(fmt.Sprintf(":%d", grpcPort), opts...)
