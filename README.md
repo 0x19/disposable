@@ -20,7 +20,9 @@ whenever email address is coming from disposable service.
 
 ### Installation
 
-To Be Defined...
+#### Docker Hub
+
+#### Manual
 
 ```shell
 make install
