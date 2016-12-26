@@ -29,3 +29,6 @@ sh: build-docker
 push: build-docker
 	docker tag $(NAME) $(IMAGE)
 	docker push $(IMAGE)
+
+start: submodules
+	go build && ./disposable
