@@ -5,6 +5,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"testing"
 	"time"
@@ -42,9 +43,12 @@ func TestService(t *testing.T) {
 	var service *Service
 	var err error
 
+	grpcPort := Random(6800, 6900)
+	httpPort := grpcPort + 1
+
 	go func(service *Service, err error) {
-		os.Setenv("GRPC_ADDR", ":5432")
-		os.Setenv("HTTP_ADDR", ":6432")
+		os.Setenv("GRPC_ADDR", fmt.Sprintf(":%d", grpcPort))
+		os.Setenv("HTTP_ADDR", fmt.Sprintf(":%d", httpPort))
 
 		Convey("goroutine block - ignore", t, func() {
 			service, err = NewTestServer()

@@ -20,7 +20,7 @@ func TestHandleVerifyEmail(t *testing.T) {
 	var service *Service
 	var err error
 
-	grpcPort := Random(6200, 6400)
+	grpcPort := Random(6500, 6700)
 	httpPort := grpcPort + 1
 
 	go func(service *Service, err error) {
