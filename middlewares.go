@@ -18,7 +18,6 @@ import (
 	disposable "github.com/0x19/disposable/protos"
 	log "github.com/Sirupsen/logrus"
 	uuid "github.com/satori/go.uuid"
-	"github.com/zang-cloud/micro-common/options"
 )
 
 // use provides a cleaner interface for chaining middleware for single routes.
@@ -96,8 +95,8 @@ func CapturePanic(h http.HandlerFunc) http.HandlerFunc {
 func BasicAuth(h http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Infof("[basic_auth] Setting up middleware...")
-		username := options.OptionString("HTTP_BASIC_USERNAME", "disposable")
-		password := options.OptionString("HTTP_BASIC_PASSWORD", "disposable123")
+		username := OptionString("HTTP_BASIC_USERNAME", "disposable")
+		password := OptionString("HTTP_BASIC_PASSWORD", "disposable123")
 
 		w.Header().Set("WWW-Authenticate", `Basic realm="Restricted"`)
 

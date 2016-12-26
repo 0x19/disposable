@@ -7,7 +7,7 @@ git:
 before_install:
     - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
     - git submodule update --init --recursive
-    
+
 go:
   - 1.5
   - 1.6
@@ -17,6 +17,14 @@ go:
 install:
   - go get -v "github.com/smartystreets/goconvey"
   - go get -v "github.com/Sirupsen/logrus"
+  - go get -v "github.com/asaskevich/govalidator"
+  - go get -v "gopkg.in/tylerb/graceful.v1"
+  - go get -v "github.com/gorilla/mux"
+  - go get -v "github.com/koding/cache"
+  - go get -v "google.golang.org/grpc"
+  - go get -v "google.golang.org/grpc/credentials"
+  - go get -v "github.com/satori/go.uuid"
+  - go get -v "github.com/smartystreets/goconvey/convey"
 
 script:
   - go test
