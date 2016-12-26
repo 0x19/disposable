@@ -5,8 +5,11 @@ git:
     submodules: false
 # Use sed to replace the SSH URL with the public URL, then initialize submodules
 before_install:
-    - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
-    - git submodule update --init --recursive
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
+
+env:
+  - DISPOSABLE_EMAILS_SOURCE=$HOME/gopath/src/github.com/0x19/disposable/services/burner/emails.txt
 
 go:
   - 1.5
