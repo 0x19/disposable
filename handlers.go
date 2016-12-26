@@ -17,16 +17,19 @@ func (s *Service) Verify(c context.Context, req *disposable.DisposableRequest) (
 
 	if err := ValidateEmail(req.Email); err != nil {
 		log.Errorf("[verify] Could not validate email address due to (err: %s)", err)
+		return err, nil
 	}
 
 	if ok := s.DisposableEmails.IsOK(req.Email); !ok {
-		log.Errorf("[verify] Seems like provided (email: %s) is blacklisted!", req.Email)
+		log.Errorf("[verify] Seems like provided (email: %s) is illegal. Returning error now...", req.Email)
 		return &disposable.DisposableResponse{
 			Status:    false,
 			RequestId: uuid.NewV4().String(),
 			Error:     disposable.NewError(ErrorDomainNotPermitted, TypeDomainNotPermitted, nil),
 		}, nil
 	}
+
+	log.Errorf("[verify] Domain verification passed for (email: %s)", req.Email)
 
 	return &disposable.DisposableResponse{
 		Status:    true,

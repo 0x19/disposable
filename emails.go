@@ -26,8 +26,8 @@ func (de *DisposableEmails) Load() error {
 		log.Errorf("[load] Failed to load (source: %s) due to (err: %s)", de.Source, err)
 		return err
 	}
-
-	de.Emails = strings.Split(string(data), "\n")
+	emails := string(data)
+	de.Emails = strings.Split(emails, "\n")
 	return nil
 }
 
@@ -43,8 +43,9 @@ func (de *DisposableEmails) DomainExists(domain string) bool {
 
 // IsOK -
 func (de *DisposableEmails) IsOK(email string) bool {
-	for _, domain := range de.Emails {
-		if strings.Contains(email, domain) {
+	for _, domain := range de.GetAll() {
+		if domain != "" && strings.Contains(email, domain) {
+			log.Infof("[is_ok] Caught illegal (domain: %s) for (email: %s)", domain, email)
 			return false
 		}
 	}

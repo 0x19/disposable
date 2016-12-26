@@ -123,6 +123,7 @@ func (s *Service) Start() (err error) {
 
 	go func() { errors <- s.RegisterAndListenGrpcServer() }()
 	go func() { errors <- s.RegisterAndListenHTTPServer() }()
+	go func() { errors <- s.DisposableEmails.Load() }()
 
 	select {
 	case err := <-errors:
