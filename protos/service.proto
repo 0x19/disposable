@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option go_package = "disposable";
+option java_package = "0x19.github.com.disposable";
+option objc_class_prefix = "Disposable";
+
+package disposable;
+
+import "protos/errors.proto";
+
+service DisposableService {
+  rpc Verify(DisposableRequest) returns (DisposableResponse) {}
+}
+
+message DisposableRequest{
+  string email = 1;
+}
+
+message DisposableResponse{
+  bool   status = 1;
+  string request_id = 2;
+  disposable.Error error = 3;
+}

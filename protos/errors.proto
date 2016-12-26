@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option go_package = "disposable";
+option java_package = "0x19.github.com.disposable";
+option objc_class_prefix = "Disposable";
+
+package disposable;
+
+message Error {
+  string message = 1;
+  string type = 2;
+  map<string, string> info = 3;
+}

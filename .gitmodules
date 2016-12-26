@@ -1,0 +1,3 @@
+[submodule "services/burner"]
+	path = services/burner
+	url = git@github.com:wesbos/burner-email-providers.git
