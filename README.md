@@ -29,8 +29,18 @@ docker pull 0x19/disposable
 #### Manual
 
 ```shell
+export GRPC_ADDR=":5911"
+export HTTP_ADDR=":8015"
+# You can use certificates located under /travis/certs if you want to get started fast
+export GRPC_CA="...generated CA file..."
+export GRPC_KEY="...generated KEY file..."
 make install
-make start
+
+# You can always do a go run or just use disposable however, if you want to fetch
+# latest list of burned email domains you have to update submodules. `make run` is here
+# to help you do all of it in one-liner. Use `make run` for development 'make start' for
+# production.
+make run
 ```
 
 
