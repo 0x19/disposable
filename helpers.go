@@ -54,12 +54,13 @@ func DecodeJSONBody(model interface{}, rc io.ReadCloser) error {
 	return nil
 }
 
+// DecodeRequestBody -
 func DecodeRequestBody(i interface{}, body io.Reader) *disposable.DisposableResponse {
 	decoder := json.NewDecoder(body)
 	if err := decoder.Decode(i); err != nil {
 		return &disposable.DisposableResponse{
 			Status:    false,
-			RequestId: uuid.NewV4().String(),
+			RequestId: GetUUID(),
 			Error: &disposable.Error{
 				Message: ErrorJSONParseError,
 				Type:    TypeJSONParseError,
@@ -87,4 +88,10 @@ func ToBool(value string, def bool) bool {
 func Random(min, max int) int {
 	rand.Seed(time.Now().Unix())
 	return rand.Intn(max-min) + min
+}
+
+// GetUUID -
+func GetUUID() string {
+	udidv4, _ := uuid.NewV4()
+	return udidv4.String()
 }

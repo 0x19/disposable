@@ -44,9 +44,15 @@ func (de *DisposableEmails) DomainExists(domain string) bool {
 // IsOK -
 func (de *DisposableEmails) IsOK(email string) bool {
 	for _, domain := range de.GetAll() {
-		if domain != "" && strings.Contains(email, domain) {
-			log.Infof("[is_ok] Caught illegal (domain: %s) for (email: %s)", domain, email)
-			return false
+		if domain != "" {
+			if strings.Contains(email, "@") {
+				splitted := strings.Split(email, "@")
+
+				if splitted[len(splitted)-1] == domain {
+					log.Infof("[is_ok] Caught illegal (domain: %s) for (email: %+v)", domain, splitted)
+					return false
+				}
+			}
 		}
 	}
 

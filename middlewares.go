@@ -17,7 +17,6 @@ import (
 
 	disposable "github.com/0x19/disposable/protos"
 	log "github.com/Sirupsen/logrus"
-	uuid "github.com/satori/go.uuid"
 )
 
 // use provides a cleaner interface for chaining middleware for single routes.
@@ -42,7 +41,7 @@ func HandleNotFound(w http.ResponseWriter, req *http.Request) {
 
 	resp := &disposable.DisposableResponse{
 		Status:    false,
-		RequestId: uuid.NewV4().String(),
+		RequestId: GetUUID(),
 		Error:     disposable.NewError(ErrorPageNotFound, TypePageNotFound, nil),
 	}
 
@@ -72,7 +71,7 @@ func CapturePanic(h http.HandlerFunc) http.HandlerFunc {
 
 				errresp := &disposable.DisposableResponse{
 					Status:    false,
-					RequestId: uuid.NewV4().String(),
+					RequestId: GetUUID(),
 					Error:     disposable.NewError(ErrorInternalServerError, TypeInternalServerError, errors.New(fmt.Sprintf("%v", err))),
 				}
 

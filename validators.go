@@ -7,7 +7,6 @@ package main
 import (
 	disposable "github.com/0x19/disposable/protos"
 	"github.com/asaskevich/govalidator"
-	uuid "github.com/satori/go.uuid"
 )
 
 // ValidateEmail -
@@ -15,7 +14,7 @@ func ValidateEmail(email string) *disposable.DisposableResponse {
 	if !govalidator.IsEmail(email) {
 		return &disposable.DisposableResponse{
 			Status:    false,
-			RequestId: uuid.NewV4().String(),
+			RequestId: GetUUID(),
 			Error:     disposable.NewError(ErrorInvalidEmailAddress, TypeInvalidEmailAddress, nil),
 		}
 	}

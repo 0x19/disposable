@@ -7,7 +7,6 @@ package main
 import (
 	disposable "github.com/0x19/disposable/protos"
 	log "github.com/Sirupsen/logrus"
-	uuid "github.com/satori/go.uuid"
 	"golang.org/x/net/context"
 )
 
@@ -24,15 +23,15 @@ func (s *Service) Verify(c context.Context, req *disposable.DisposableRequest) (
 		log.Errorf("[verify] Seems like provided (email: %s) is illegal. Returning error now...", req.Email)
 		return &disposable.DisposableResponse{
 			Status:    false,
-			RequestId: uuid.NewV4().String(),
+			RequestId: GetUUID(),
 			Error:     disposable.NewError(ErrorDomainNotPermitted, TypeDomainNotPermitted, nil),
 		}, nil
 	}
 
-	log.Errorf("[verify] Domain verification passed for (email: %s)", req.Email)
+	log.Infof("[verify] Domain verification passed for (email: %s)", req.Email)
 
 	return &disposable.DisposableResponse{
 		Status:    true,
-		RequestId: uuid.NewV4().String(),
+		RequestId: GetUUID(),
 	}, nil
 }
